@@ -1,0 +1,229 @@
+@keyframes reveal
+{
+	from {background-color: gray;}
+	to {background-color: transparent;}
+}
+
+.right
+{
+	float: right;
+}
+
+table, th, td
+{
+	border: .5px solid black;
+}
+
+table tr td
+{
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+input
+{
+	vertical-align: top;
+}
+
+#multiplayer-wrapper
+{
+	display: inline-block;
+}
+
+#player
+{
+	float: right;
+}
+
+.board
+{
+	display: inline-block;
+	border: 1px solid black;
+	background-color: whitesmoke;
+
+	/* Disable user interaction with text */
+	-webkit-touch-callout:	none;	/* iOS Safari */
+	-webkit-user-select:	none;	/* Chrome/Safari/Opera */
+	-khtml-user-select:		none;	/* Konqueror */
+	-moz-user-select:		none;	/* Firefox */
+	-ms-user-select:		none;	/* IE/Edge */
+	user-select:			none;	/* non-prefixed version, currently not supported by any browser */
+}
+
+.row
+{
+	display: flex;
+}
+
+.cell
+{
+	border: 1px solid black;
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+
+.cell:hover
+{
+	border-color: #Bada55;	/* Badass */
+}
+
+.cell-number
+{
+	background-color: lightgray;
+}
+
+.blocker
+{
+	background-color: gray;
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.revealed-animate
+{
+	animation-name: reveal;
+	animation-duration: 1s;
+}
+
+.revealed
+{
+	background-color: transparent;
+}
+
+.number/*, .marked, .marked-mine*/
+{
+	text-align: center;
+	/*transform: translateY(50%);*/
+	font-size: xx-large;
+}
+
+.marked-cell-without-mine
+{
+	border-color: red;
+}
+
+.marked-mine:after
+{
+	content: "!";
+}
+
+.marked:after
+{
+	content: "?";
+}
+
+.mine
+{
+	background: url("img/mine.svg") grey;	/* Artwork from http://www.clker.com/clipart-marine-mine.html */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.mine-clickend
+{
+	background: url("img/mine.svg") crimson;	/* Artwork from http://www.clker.com/clipart-marine-mine.html */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.mine-expected
+{
+	background: url("img/mine.svg") sandybrown;	/* Artwork from http://www.clker.com/clipart-marine-mine.html */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.mine-found
+{
+	background: url("img/mine.svg") lightgreen;	/* Artwork from http://www.clker.com/clipart-marine-mine.html */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.place
+{
+	text-align: center;
+}
+
+.duration, .date
+{
+	text-align: right;
+}
+
+.header-row
+{
+	background-color: lightgrey;
+}
+
+.not-found
+{
+	opacity: .25;
+	background-color: red;
+}
+
+#time-wrapper
+{
+	display: flex;
+	position: relative;
+	margin-bottom: 3px;
+}
+
+#current-time-left
+{
+	position: absolute;
+	bottom: 0;
+	padding: 2px;
+}
+
+.hidden
+{
+	visibility: hidden;
+}
+
+.hide
+{
+	display: none;
+}
+
+.border
+{
+	position: absolute;
+	bottom: 0;
+	border-top: 1px dashed;
+	border-left: 1px solid;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	padding: 2px;
+	width: calc(100% - 6px);
+	height: 1em;
+}
+
+#players
+{
+	flex-grow: 1;
+}
+
+#players .time
+{
+	padding-left: 6px;
+	display: inline;
+}
+
+#players .name
+{
+	float: right;
+}
+
+#players .player-row
+{
+	padding: 2px;
+}
