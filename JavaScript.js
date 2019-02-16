@@ -370,7 +370,9 @@ function updateMarkCounter()
 var clickEventActive = false;
 function click(cell, reveal)
 {
-	if(clickEventActive || isFinnished)
+	var blocker = cell.getElementsByClassName('blocker')[0];
+
+	if(clickEventActive || isFinnished || blocker.classList.contains("revealed"))
 	{
 		return;	// Disable
 	}
@@ -379,7 +381,6 @@ function click(cell, reveal)
 		clickEventActive = true;
 	}
 
-	var blocker = cell.getElementsByClassName('blocker')[0];
 	var blockerID = blocker.id;
 
 	if(reveal && minefield === false)
