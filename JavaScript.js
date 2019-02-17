@@ -14,7 +14,6 @@ var totalNumberOfMines;
 var timeStarted;
 var checkboxQuickGame;
 var tableTopPlays;
-var topPlaysArray;
 var multiplayerPlayTime;	// Milliseconds
 var players;
 var tableLosses;
@@ -23,6 +22,7 @@ var playerRowList;
 
 var isMultiplayer = false;
 var topPlays = 10;
+var topPlaysArray = Array();
 var isFinnished = true;
 var SEPERATOR = '$';
 var playerNamesHistory = '';
