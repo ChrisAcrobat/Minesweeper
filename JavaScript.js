@@ -384,9 +384,7 @@ function click(cell, reveal)
 	if(reveal && minefield === false)
 	{
 		populateMines(blockerID);
-		if(!isMultiplayer){
-			timeStarted = Date.now();
-		}
+		timeStarted = Date.now();	// TODO: Check if this has something to do with the time-bug in multiplayer.
 	}
 
 	if(reveal)
