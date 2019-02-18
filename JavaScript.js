@@ -188,8 +188,6 @@ function generate()
 		players = Array();
 		var playerNames = inputPlayerName.value;
 		var playerNamesArray = playerNames.split('\n');
-		var numberOfPlayers = playerNamesArray.length;
-		var index = 0;
 		var time;	// Get last time in loop.
 		while(0 < playerNamesArray.length)
 		{
@@ -386,7 +384,9 @@ function click(cell, reveal)
 	if(reveal && minefield === false)
 	{
 		populateMines(blockerID);
-		timeStarted = Date.now();
+		if(!isMultiplayer){
+			timeStarted = Date.now();
+		}
 	}
 
 	if(reveal)
@@ -454,15 +454,16 @@ function click(cell, reveal)
 
 function switchPlayer()
 {
-	var player = players.pop();
+	var currentPlayer = players.pop();
 	if(timeStarted !== undefined)
 	{
 		var timePassed = (Date.now() - timeStarted);
-		player.timeleft = player.timeleft - timePassed;
+		currentPlayer.timeleft = currentPlayer.timeleft - timePassed;
 	}
-	players.unshift(player);
+	players.unshift(currentPlayer);
 	timeStarted = Date.now();
 
+	// Switch time counter.
 	var array = playerRowList.childNodes;
 	var current = array[array.length - 1];
 	current.getElementsByClassName('time')[0].id = '';
