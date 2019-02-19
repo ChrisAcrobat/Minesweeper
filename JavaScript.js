@@ -213,7 +213,7 @@ function generate()
 			playerRowList.appendChild(playerRow);
 		}
 		time.id = 'time';
-		switchPlayer();
+		switchPlayer();	// TODO: Add comment to why this is called. To initiate playertime-handeler?
 
 		// Generate scorce table
 		if(playerNamesHistory !== playerNames)
