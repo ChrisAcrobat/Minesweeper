@@ -452,13 +452,13 @@ function click(cell, reveal)
 
 function switchPlayer()
 {
-	var currentPlayer = players.pop();
+	var currentPlayer = players.shift();
 	if(timeStarted !== undefined)
 	{
 		var timePassed = (Date.now() - timeStarted);
 		currentPlayer.timeleft = currentPlayer.timeleft - timePassed;
 	}
-	players.unshift(currentPlayer);
+	players.push(currentPlayer);
 	timeStarted = Date.now();
 
 	// Switch time counter.
