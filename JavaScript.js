@@ -184,10 +184,49 @@ function generate()
 		// Remove old player list.
 		while(playerRowList.firstChild){playerRowList.removeChild(playerRowList.firstChild);}
 
-		// Create players
-		players = Array();
+		// Generate scorce table
 		var playerNames = inputPlayerName.value;
 		var playerNamesArray = playerNames.split('\n');
+		playerNamesArray.sort();
+
+		if(playerNamesHistory !== playerNames)
+		{
+			playerNamesHistory = playerNames;
+
+			// Remove old table
+			var dataRows = document.getElementsByClassName('data-row');
+			while(0 < dataRows.length)
+			{
+				var element = dataRows[0];
+				element.parentNode.removeChild(element);
+			}
+
+			// Generate new
+			playerNamesArray.forEach(function(playerName)
+			{
+				var tableRow = document.createElement('tr');
+				tableRow.classList.add('data-row');
+
+				// Name
+				var tableCell = document.createElement('td');
+				tableCell.classList.add('data-row');
+				tableCell.innerHTML = playerName;
+				tableRow.appendChild(tableCell);
+
+				// Losses
+				var tableCell = document.createElement('td');
+				tableCell.id = 'row_' + playerName;
+				tableCell.classList.add('data-row');
+				tableCell.innerHTML = 0;
+				tableCell.dataset.losses = 0;
+				tableRow.appendChild(tableCell);
+
+				tableLosses.appendChild(tableRow);
+			}, this);
+		}
+
+		// Create players
+		players = Array();
 		var time;	// Get last time in loop.
 		while(0 < playerNamesArray.length)
 		{
@@ -214,43 +253,6 @@ function generate()
 		}
 		time.id = 'time';
 		switchPlayer();	// TODO: Add comment to why this is called. To initiate playertime-handeler?
-
-		// Generate scorce table
-		if(playerNamesHistory !== playerNames)
-		{
-			playerNamesHistory = playerNames;
-
-			// Remove old table
-			var dataRows = document.getElementsByClassName('data-row');
-			while(0 < dataRows.length)
-			{
-				var element = dataRows[0];
-				element.parentNode.removeChild(element);
-			}
-
-			// Generate new
-			players.forEach(function(player)
-			{
-				var tableRow = document.createElement('tr');
-				tableRow.classList.add('data-row');
-
-				// Name
-				var tableCell = document.createElement('td');
-				tableCell.classList.add('data-row');
-				tableCell.innerHTML = player.name;
-				tableRow.appendChild(tableCell);
-
-				// Losses
-				var tableCell = document.createElement('td');
-				tableCell.id = 'row_' + player.name;
-				tableCell.classList.add('data-row');
-				tableCell.innerHTML = 0;
-				tableCell.dataset.losses = 0;
-				tableRow.appendChild(tableCell);
-
-				tableLosses.appendChild(tableRow);
-			}, this);
-		}
 	}
 	restart();
 	updateGlobalTable();
