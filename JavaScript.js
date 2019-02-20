@@ -372,7 +372,7 @@ function click(cell, reveal)
 {
 	var blocker = cell.getElementsByClassName('blocker')[0];
 
-	if(clickEventActive || isFinnished || blocker.classList.contains("revealed"))
+	if(clickEventActive || isFinnished || blocker.classList.contains('revealed'))
 	{
 		return;	// Disable
 	}
