@@ -113,7 +113,6 @@ function keyPress()
 		case 116:	// F5 button
 			generate();
 			event.returnValue = false;
-			event.keyCode = 0;
 			return false;
 
 		case 82:	// R button
@@ -121,7 +120,6 @@ function keyPress()
 			{
 				generate();
 				event.returnValue = false;
-				event.keyCode = 0;
 				return false;
 			}
 	}
