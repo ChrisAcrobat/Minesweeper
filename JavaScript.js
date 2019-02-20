@@ -611,7 +611,6 @@ function checkIfFinished()
 		var timeNow = Date.now();
 		var blockers = document.getElementsByClassName('blocker');
 		var blockersArray = [].slice.call(blockers);
-		var length = blockersArray.length;
 
 		isFinnished = true;
 		for(var index = 0; index < blockersArray.length; index++)
