@@ -658,10 +658,10 @@ function gameOver(multiplayerLose)
 
 	if(isMultiplayer && multiplayerLose !== false)
 	{
-		var looserCell = document.getElementById('row_' + players[players.length - 1].name);
+		var loseCounter = document.getElementById('row_' + players[0].name);
 		timeStarted = undefined;
-		looserCell.dataset.losses++;
-		looserCell.innerHTML = looserCell.dataset.losses;
+		loseCounter.dataset.losses++;
+		loseCounter.innerHTML = loseCounter.dataset.losses;
 	}
 
 	revealAll();
