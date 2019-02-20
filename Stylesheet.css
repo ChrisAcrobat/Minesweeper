@@ -30,7 +30,6 @@ input
 #multiplayer-wrapper
 {
 	display: inline-block;
-	min-height: 2em;
 }
 
 #player
@@ -176,6 +175,7 @@ input
 	display: flex;
 	position: relative;
 	margin-bottom: 3px;
+	min-height: 2em;
 }
 
 #current-time-left
