@@ -30,6 +30,7 @@ input
 #multiplayer-wrapper
 {
 	display: inline-block;
+	min-height: 2em;
 }
 
 #player
