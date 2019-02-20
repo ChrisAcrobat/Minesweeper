@@ -109,6 +109,21 @@ function keyPress()
 				generate();
 			}
 			break;
+
+		case 116:	// F5 button
+			generate();
+			event.returnValue = false;
+			event.keyCode = 0;
+			return false;
+
+		case 82:	// R button
+			if(event.ctrlKey)
+			{
+				generate();
+				event.returnValue = false;
+				event.keyCode = 0;
+				return false;
+			}
 	}
 }
 
