@@ -659,7 +659,7 @@ function gameOver(multiplayerLose)
 	{
 		timeStarted = undefined;
 		let array = playerRowList.childNodes;
-		let playerName = array[array.length-1].getElementsByClassName('name').innerHTML;
+		let playerName = array[array.length-1].getElementsByClassName('name')[0].innerHTML;
 		var loseCounter = document.getElementById('row_' + playerName);
 		loseCounter.dataset.losses++;
 		loseCounter.innerHTML = loseCounter.dataset.losses;
