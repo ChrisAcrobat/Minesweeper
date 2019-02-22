@@ -280,7 +280,7 @@ function generate()
 	updateGlobalTable();
 	resizeScreen();
 
-	speechSynthesisUtterance.text = players[0].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
+	speechSynthesisUtterance.text = players[players.length-1].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
 	window.speechSynthesis.speak(speechSynthesisUtterance);
 }
 
