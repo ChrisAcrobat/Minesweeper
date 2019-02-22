@@ -4,6 +4,11 @@
 	to {background-color: transparent;}
 }
 
+body
+{
+	float: left;
+}
+
 .right
 {
 	float: right;
