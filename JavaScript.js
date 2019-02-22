@@ -27,6 +27,14 @@ var isFinnished = true;
 var SEPERATOR = '$';
 var playerNamesHistory = '';
 
+var speechSynthesisUtterance = new SpeechSynthesisUtterance();
+speechSynthesisUtterance.voice = window.speechSynthesis.getVoices()[0];	// Note: some voices don't support altering params
+speechSynthesisUtterance.volume = 1;			// 0 to 1
+speechSynthesisUtterance.rate = 1;			// 0.1 to 10
+speechSynthesisUtterance.pitch = 2;			// 0 to 2
+speechSynthesisUtterance.lang = 'en-US';
+speechSynthesisUtterance.onend = function(e){};
+
 // Pre-init
 let postManager = new PostManager();
 
@@ -271,6 +279,9 @@ function generate()
 	restart();
 	updateGlobalTable();
 	resizeScreen();
+
+	speechSynthesisUtterance.text = players[0].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
+	window.speechSynthesis.speak(speechSynthesisUtterance);
 }
 
 function resizeScreen()
