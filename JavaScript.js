@@ -4,6 +4,7 @@ var inputWidth;
 var inputHeight;
 var inputPopulation;
 var inputPlayerName;
+var inputEnableZoom;
 var inputTimePerPlayer;
 var gameboard;
 var width;
@@ -68,6 +69,7 @@ function onload(inputMode)
 		inputPopulation = document.getElementById('boardPopulation');
 		inputPlayerName = document.getElementById('playerName');
 		inputTimePerPlayer = document.getElementById('timePerPlayer');
+		inputEnableZoom = document.getElementById('enableZoom');
 		checkboxQuickGame = document.getElementById('quickGame');
 		tableTopPlays = document.getElementById('topPlays');
 		tableLosses = document.getElementById('tableLosses');
@@ -287,9 +289,12 @@ function generate()
 function resizeScreen()
 {
 	document.body.style.zoom = 1;
-	let zoomWidth = document.body.parentElement.clientWidth / (document.body.clientWidth + 16);
-	let zoomHeight = document.body.parentElement.clientHeight / (document.body.clientHeight + 16);
-	document.body.style.zoom = Math.min(zoomWidth, zoomHeight);
+	if(inputEnableZoom.checked)
+	{
+		let zoomWidth = document.body.parentElement.clientWidth / (document.body.clientWidth + 16);
+		let zoomHeight = document.body.parentElement.clientHeight / (document.body.clientHeight + 16);
+		document.body.style.zoom = Math.min(zoomWidth, zoomHeight);
+	}
 }
 
 function restart()
