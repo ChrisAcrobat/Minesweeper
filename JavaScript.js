@@ -276,8 +276,8 @@ function generate()
 function resizeScreen()
 {
 	document.body.style.zoom = 1;
-	let zoomWidth = document.body.parentElement.clientWidth / document.body.clientWidth;
-	let zoomHeight = document.body.parentElement.clientHeight / document.body.clientHeight;
+	let zoomWidth = document.body.parentElement.clientWidth / (document.body.clientWidth + 16);
+	let zoomHeight = document.body.parentElement.clientHeight / (document.body.clientHeight + 16);
 	document.body.style.zoom = Math.min(zoomWidth, zoomHeight);
 }
 
