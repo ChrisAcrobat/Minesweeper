@@ -33,6 +33,7 @@ let postManager = new PostManager();
 function onload(inputMode)
 {
 	wrapper = document.getElementById('wrapper');
+	window.onresize = resizeScreen;
 
 	if(inputMode === 'LOCAL_HIGESCORE' || inputMode === 'GLOBAL_HIGESCORE')
 	{
@@ -269,6 +270,15 @@ function generate()
 	}
 	restart();
 	updateGlobalTable();
+	resizeScreen();
+}
+
+function resizeScreen()
+{
+	document.body.style.zoom = 1;
+	let zoomWidth = document.body.parentElement.offsetWidth / document.body.offsetWidth;
+	let zoomHeight = document.body.parentElement.offsetHeight / document.body.offsetHeight;
+	document.body.style.zoom = Math.min(zoomWidth, zoomHeight);
 }
 
 function restart()
