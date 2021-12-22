@@ -734,7 +734,7 @@ function revealAll()
 	}, this);
 }
 
-function saveCookie_quickGame()
+function saveState_quickGame()
 {
 	setStoredValue('quickGame', checkboxQuickGame.checked);
 }
