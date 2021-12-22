@@ -42,9 +42,9 @@ function onload(inputMode)
 {
 	wrapper = document.getElementById('wrapper');
 
-	if(inputMode === 'LOCAL_HIGESCORE' || inputMode === 'GLOBAL_HIGESCORE')
+	if(inputMode === 'LOCAL_HIGHSCORE' || inputMode === 'GLOBAL_HIGHSCORE')
 	{
-		if(inputMode === 'LOCAL_HIGESCORE')
+		if(inputMode === 'LOCAL_HIGHSCORE')
 		{
 			getStoredTables();
 			createTables();
@@ -773,7 +773,7 @@ function getStoredTables()
 function fetchTablesFromDatabase()
 {
 	return; // Disabled. Maybe reactivated in the future.
-	postManager.send('/api/', {module: 'Minesweeper.GetGlobalHigescores'}, returnData => {
+	postManager.send('/api/', {module: 'Minesweeper.GetGlobalHighscores'}, returnData => {
 		if(returnData !== '')
 		{
 			topPlaysArray = returnData;
@@ -971,7 +971,7 @@ function createTables()
 				mainHeaderRow.onclick = function(){toggleTable(mainHeaderRow)};
 				var headerCell = document.createElement('th');
 				headerCell.colSpan = 4;
-				headerCell.innerHTML = 'Higescore (' + uniqeWidth + 'x' + uniqeHeight + 'x' + uniqePopulation + ')';
+				headerCell.innerHTML = 'High score (' + uniqeWidth + 'x' + uniqeHeight + 'x' + uniqePopulation + ')';
 				mainHeaderRow.appendChild(headerCell);
 				table.appendChild(mainHeaderRow);
 				// Sub header
