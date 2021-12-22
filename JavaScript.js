@@ -27,22 +27,20 @@ var topPlaysArray = Array();
 var isFinnished = true;
 var SEPERATOR = '$';
 var playerNamesHistory = '';
+let userActivated = false;
 
 var speechSynthesisUtterance = new SpeechSynthesisUtterance();
 speechSynthesisUtterance.voice = window.speechSynthesis.getVoices()[0];	// Note: some voices don't support altering params
-speechSynthesisUtterance.volume = 1;			// 0 to 1
-speechSynthesisUtterance.rate = 1;			// 0.1 to 10
-speechSynthesisUtterance.pitch = 2;			// 0 to 2
+speechSynthesisUtterance.volume = 1;	// 0 to 1
+speechSynthesisUtterance.rate = 1;		// 0.1 to 10
+speechSynthesisUtterance.pitch = 1;		// 0 to 2
 speechSynthesisUtterance.lang = 'en-US';
 speechSynthesisUtterance.onend = function(e){};
 
 // Pre-init
-let postManager = new PostManager();
-
 function onload(inputMode)
 {
 	wrapper = document.getElementById('wrapper');
-	window.onresize = resizeScreen;
 
 	if(inputMode === 'LOCAL_HIGESCORE' || inputMode === 'GLOBAL_HIGESCORE')
 	{
@@ -61,6 +59,7 @@ function onload(inputMode)
 		if(inputMode !== undefined)
 		{
 			isMultiplayer = inputMode === 'MULTIPLAYER';
+			window.onresize = resizeScreen;
 		}
 
 		document.onkeydown = keyPress;
@@ -279,11 +278,13 @@ function generate()
 		switchPlayer();	// TODO: Add comment to why this is called. To initiate playertime-handeler?
 	}
 	restart();
-	updateGlobalTable();
-	resizeScreen();
-
-	speechSynthesisUtterance.text = players[1%players.length].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
-	window.speechSynthesis.speak(speechSynthesisUtterance);
+	if(isMultiplayer){
+		resizeScreen();
+		if(userActivated){
+			speechSynthesisUtterance.text = players[1%players.length].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
+			window.speechSynthesis.speak(speechSynthesisUtterance);
+		}
+	}
 }
 
 function resizeScreen()
@@ -299,6 +300,7 @@ function resizeScreen()
 
 function restart()
 {
+	userActivated = true;
 	var wasFinnished = isFinnished;
 	timeStarted = undefined;
 	isFinnished = false;
@@ -770,6 +772,7 @@ function getStoredTables()
 
 function fetchTablesFromDatabase()
 {
+	return; // Disabled. Maybe reactivated in the future.
 	postManager.send('/api/', {module: 'Minesweeper.GetGlobalHigescores'}, returnData => {
 		if(returnData !== '')
 		{
@@ -805,6 +808,7 @@ function addPlayToTable(playedMilliseconds)
 
 function updateGlobalTable()
 {
+	return; // Disabled. Maybe reactivated in the future.
 	topPlaysArray.forEach(function(tableRow_data)
 	{
 		if(tableRow_data.uploaded !== 1)
@@ -963,6 +967,7 @@ function createTables()
 				// Major header
 				var mainHeaderRow = document.createElement('tr');
 				mainHeaderRow.classList.add('header-row');
+				mainHeaderRow.classList.add('clickable');
 				mainHeaderRow.onclick = function(){toggleTable(mainHeaderRow)};
 				var headerCell = document.createElement('th');
 				headerCell.colSpan = 4;

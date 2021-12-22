@@ -3,3 +3,7 @@ table
 	float: left;
 	margin: 3px;
 }
+
+.clickable {
+	cursor: pointer;
+}
