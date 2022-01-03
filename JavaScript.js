@@ -202,7 +202,7 @@ function generate()
 	}
 	else
 	{
-		multiplayerPlayTime = inputTimePerPlayer.valueAsNumber * 1000;
+		multiplayerPlayTime = inputTimePerPlayer.valueAsNumber < 1 ? Number.POSITIVE_INFINITY : inputTimePerPlayer.valueAsNumber * 1000;
 
 		// Remove old player list.
 		while(playerRowList.firstChild){playerRowList.removeChild(playerRowList.firstChild);}
