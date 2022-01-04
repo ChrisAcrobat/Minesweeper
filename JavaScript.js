@@ -326,6 +326,9 @@ function restart()
 
 function convertToSeconds(timestamp)
 {
+	if(timestamp === Infinity){
+		return Infinity.toString();
+	}
 	var minutes = '';
 	var preSeconds = '';
 	var postSeconds = '';
