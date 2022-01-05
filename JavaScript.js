@@ -405,8 +405,9 @@ function animateScreen(timestamp)
 
 function updateMarkCounter()
 {
-	if(!isMultiplayer)
-	{
+	if(isMultiplayer){
+		document.getElementById('spacesLeft').innerText = [...document.getElementsByClassName('blocker')].filter(b => !b.classList.contains('revealed')).length;
+	}else{
 		document.getElementById('markCounter').innerText = document.getElementsByClassName('marked-mine').length;
 	}
 }

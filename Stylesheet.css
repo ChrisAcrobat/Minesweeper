@@ -233,3 +233,10 @@ input
 {
 	padding: 2px;
 }
+
+#spacesLeft::before {
+	content: ' (';
+}
+#spacesLeft::after {
+	content: ')';
+}
