@@ -280,8 +280,8 @@ function generate()
 	restart();
 	if(isMultiplayer){
 		resizeScreen();
-		if(userActivated){
-			speechSynthesisUtterance.text = players[1%players.length].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
+		if(userActivated && 1 < players.length){
+			speechSynthesisUtterance.text = players[1].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
 			window.speechSynthesis.speak(speechSynthesisUtterance);
 		}
 	}
