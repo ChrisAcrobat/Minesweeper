@@ -16,7 +16,6 @@ var timeStarted;
 var checkboxQuickGame;
 var tableTopPlays;
 var multiplayerPlayTime;	// Milliseconds
-var players;
 var tableLosses;
 var listOfCells;
 var playerRowList;
@@ -209,7 +208,7 @@ function generate()
 
 		// Generate scorce table
 		var playerNames = inputPlayerName.value;
-		var playerNamesArray = playerNames.split('\n');
+		var playerNamesArray = playerNames.trim().split('\n');
 		playerNamesArray.sort();
 
 		if(playerNamesHistory !== playerNames)
@@ -249,26 +248,24 @@ function generate()
 		}
 
 		// Create players
-		players = Array();
 		var time;	// Get last time in loop.
 		while(0 < playerNamesArray.length)
 		{
 			var randomIndex = Math.floor(Math.random() * playerNamesArray.length);
 			var nameString = playerNamesArray.splice(randomIndex, 1)[0];
-			var player = {'name': nameString, 'timeleft': multiplayerPlayTime};
-			players.push(player);
 
 			// Create new player list.
 			var playerRow = document.createElement('div');
 			playerRow.classList.add('player-row');
 
 			time = document.createElement('div');
-			time.innerHTML = convertToSeconds(multiplayerPlayTime);
+			time.dataset.timeleft = multiplayerPlayTime;
+			time.innerHTML = timespanToString(multiplayerPlayTime);
 			time.classList.add('time');
 			playerRow.appendChild(time);
 
 			var name = document.createElement('div');
-			name.innerHTML = nameString;
+			name.innerText = nameString;
 			name.classList.add('name');
 			playerRow.appendChild(name);
 
@@ -280,8 +277,9 @@ function generate()
 	restart();
 	if(isMultiplayer){
 		resizeScreen();
-		if(userActivated && 1 < players.length){
-			speechSynthesisUtterance.text = players[1].name.replace(/(_)/i, ' ');	// Replace "_" with " ".;
+		if(userActivated && 1 < playerRowList.childElementCount){
+			let playerName = playerRowList.lastChild.getElementsByClassName('name')[0];
+			speechSynthesisUtterance.text = playerName.innerText.replace(/(_)/i, ' ');	// Replace "_" with " ".;
 			window.speechSynthesis.speak(speechSynthesisUtterance);
 		}
 	}
@@ -324,17 +322,17 @@ function restart()
 	updateMarkCounter();
 }
 
-function convertToSeconds(timestamp)
+function timespanToString(timespan)
 {
-	if(timestamp === Infinity){
-		return Infinity.toString();
+	if(timespan === Infinity){
+		return timespan.toString();
 	}
 	var minutes = '';
 	var preSeconds = '';
 	var postSeconds = '';
-	if(0 < parseFloat(timestamp))
+	if(0 < parseFloat(timespan))
 	{
-		var timePlayed = timestamp/1000;
+		var timePlayed = timespan/1000;
 		var seconds = timePlayed%60;
 
 		if(60 <= timePlayed)
@@ -377,7 +375,7 @@ function animateScreen(timestamp)
 	if(isMultiplayer)
 	{
 		var timeleft;
-		var player = players[0];
+		var player = playerRowList.firstChild;
 
 		if(timeStarted === undefined)
 		{
@@ -385,7 +383,7 @@ function animateScreen(timestamp)
 		}
 		else
 		{
-			timeleft = timeStarted + player.timeleft - Date.now();
+			timeleft = timeStarted + parseInt(player.getElementsByClassName('time')[0].dataset.timeleft) - Date.now();
 		}
 
 		if(timeleft < 0)
@@ -394,11 +392,11 @@ function animateScreen(timestamp)
 			gameOver();
 		}
 
-		document.getElementById('time').innerHTML = convertToSeconds(timeleft);
+		document.getElementById('time').innerHTML = timespanToString(timeleft);
 	}
 	else
 	{
-		document.getElementById('time').innerHTML = convertToSeconds(Date.now() - timeStarted);
+		document.getElementById('time').innerHTML = timespanToString(Date.now() - timeStarted);
 	}
 	window.requestAnimationFrame(animateScreen);
 }
@@ -499,22 +497,19 @@ function click(cell, reveal)
 
 function switchPlayer()
 {
-	var currentPlayer = players.shift();
+	var current = playerRowList.lastChild;
 	if(timeStarted !== undefined)
 	{
 		var timePassed = (Date.now() - timeStarted);
-		currentPlayer.timeleft = currentPlayer.timeleft - timePassed;
+		let time = current.getElementsByClassName('time')[0];
+		time.dataset.timeleft = parseInt(time.dataset.timeleft) - timePassed;
 	}
-	players.push(currentPlayer);
 	timeStarted = Date.now();
 
 	// Switch time counter.
-	var array = playerRowList.childNodes;
-	var current = array[array.length - 1];
 	current.getElementsByClassName('time')[0].id = '';
-	var next = array[array.length - 2];
-	next.getElementsByClassName('time')[0].id = 'time';
-	array[0].insertAdjacentElement('beforebegin', current);
+	playerRowList.firstChild.insertAdjacentElement('beforebegin', current);
+	playerRowList.lastChild.getElementsByClassName('time')[0].id = 'time';
 }
 
 function getNearby(blockerID)
@@ -634,7 +629,7 @@ function populateMines(exceptCellID)
 					var number = document.createElement('div');
 					number.classList.add('number');
 					number.innerHTML = minesNearby;
-					var blocker = currentCell.childNodes[0];
+					var blocker = currentCell.firstChild;
 					currentCell.removeChild(blocker);
 					currentCell.appendChild(number);
 					currentCell.appendChild(blocker);
@@ -673,7 +668,7 @@ function checkIfFinished()
 			if(!isMultiplayer)	// TODO: Quick fix. Move to higer scope when finished.
 			{
 				var finalTime = timeNow - timeStarted;
-				document.getElementById('time').innerHTML = convertToSeconds(finalTime);
+				document.getElementById('time').innerHTML = timespanToString(finalTime);
 				addPlayToTable(finalTime);
 			}
 			revealAll();
@@ -688,7 +683,7 @@ function gameOver(multiplayerLose)
 	isFinnished = true;
 
 	var blockers = document.getElementsByClassName('blocker');
-	[].slice.call(blockers).forEach(function(blocker)
+	[...blockers].forEach(function(blocker)
 	{
 		var found = blocker.classList.contains('revealed');
 		found |= blocker.classList.contains('marked-mine');
@@ -703,8 +698,7 @@ function gameOver(multiplayerLose)
 	if(isMultiplayer && multiplayerLose !== false)
 	{
 		timeStarted = undefined;
-		let array = playerRowList.childNodes;
-		let playerName = array[array.length-1].getElementsByClassName('name')[0].innerHTML;
+		let playerName = playerRowList.lastChild.getElementsByClassName('name')[0].innerHTML;
 		var loseCounter = document.getElementById('row_' + playerName);
 		loseCounter.dataset.losses++;
 		loseCounter.innerHTML = loseCounter.dataset.losses;
@@ -897,7 +891,7 @@ function updateTable()
 
 		// Time
 		var tableCell = document.createElement('td');
-		tableCell.innerHTML = convertToSeconds(tableRow_data.time);
+		tableCell.innerHTML = timespanToString(tableRow_data.time);
 		tableCell.classList.add('duration');
 		tableRow.appendChild(tableCell);
 
@@ -1029,7 +1023,7 @@ function createTables()
 
 						// Time
 						var tableCell = document.createElement('td');
-						tableCell.innerHTML = convertToSeconds(tableRow_data.time);
+						tableCell.innerHTML = timespanToString(tableRow_data.time);
 						tableCell.classList.add('duration');
 						tableRow.appendChild(tableCell);
 
